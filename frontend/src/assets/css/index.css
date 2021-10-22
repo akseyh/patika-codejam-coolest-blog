@@ -553,10 +553,35 @@ video {
 [hidden] {
   display: none;
 }
-.bg-red-400 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
+.m-auto {
+	margin: auto;
 }
-.p-4 {
-	padding: 1rem;
+.flex {
+	display: flex;
+}
+.w-10\/12 {
+	width: 83.333333%;
+}
+.list-none {
+	list-style-type: none;
+}
+.flex-row {
+	flex-direction: row;
+}
+.items-center {
+	align-items: center;
+}
+.justify-between {
+	justify-content: space-between;
+}
+.gap-2 {
+	gap: 0.5rem;
+}
+.text-4xl {
+	font-size: 2.25rem;
+	line-height: 2.5rem;
+}
+.text-gray-600 {
+	--tw-text-opacity: 1;
+	color: rgba(75, 85, 99, var(--tw-text-opacity));
 }

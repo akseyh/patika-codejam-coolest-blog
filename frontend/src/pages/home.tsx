@@ -1,5 +1,11 @@
+import { Header } from "../components";
+
 const Home: React.FC = () => {
-  return <div className="bg-red-400 p-4">deneme</div>;
+  return (
+    <div>
+      <Header />
+    </div>
+  );
 };
 
 export default Home;

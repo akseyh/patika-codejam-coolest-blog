@@ -11,7 +11,15 @@ import (
 func main() {
 	e := echo.New()
 	e.Use(utils.CORSConfig(), utils.Logger())
-	e.POST("/login", handlers.Login)
+	client := utils.Connect()
+	defer utils.Close(client)
+	login := handlers.Collection{
+		C1: client.Database("coolest-blog").Collection("user"),
+		C2: client.Database("coolest-blog").Collection("token"),
+	}
+
+	e.POST("/login", login.Login)
+	e.POST("/checkToken", utils.CheckToken)
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})

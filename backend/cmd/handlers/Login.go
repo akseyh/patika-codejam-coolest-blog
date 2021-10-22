@@ -11,8 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func Login(c echo.Context) error {
-	client := utils.Connect()
+func (coll *Collection) Login(c echo.Context) error {
 	resultDoc := &models.UserStruct{}
 	if err := c.Bind(resultDoc); err != nil {
 		fmt.Println("bind err", err)
@@ -24,17 +23,15 @@ func Login(c echo.Context) error {
 		Password: resultDoc.Password,
 	}
 
-	coll := client.Database("coolest-blog").Collection("user")
+	coll.C1.FindOne(context.TODO(), filterDoc).Decode(resultDoc)
 
-	coll.FindOne(context.TODO(), filterDoc).Decode(resultDoc)
 	if resultDoc.Id.Hex() == "000000000000000000000000" {
 		return c.JSON(http.StatusBadRequest, "uza birader 4 kişilik içerisi")
 	}
 
-	fmt.Println("result doc id", resultDoc.Id.Hex())
 	token := utils.CreateToken(*resultDoc)
 	return c.JSON(http.StatusOK, bson.M{
-		"_id":      resultDoc.Id,
+		"userId":   resultDoc.Id,
 		"token":    token,
 		"username": resultDoc.Username,
 	})

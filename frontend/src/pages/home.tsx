@@ -1,11 +1,7 @@
-import { Header } from "../components";
+import { Layout } from "../components";
 
 const Home: React.FC = () => {
-  return (
-    <div>
-      <Header />
-    </div>
-  );
+  return <Layout>b</Layout>;
 };
 
 export default Home;

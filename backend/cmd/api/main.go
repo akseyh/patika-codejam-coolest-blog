@@ -17,12 +17,21 @@ func main() {
 		C1: client.Database("coolest-blog").Collection("user"),
 		C2: client.Database("coolest-blog").Collection("token"),
 	}
-	blog := handlers.Collection{
+	posts := handlers.Collection{
 		C1: client.Database("coolest-blog").Collection("blog"),
+	}
+	profile := handlers.Collection{
+		C1: client.Database("coolest-blog").Collection("profile"),
 	}
 	e.POST("/login", login.Login)
 	e.POST("/checkToken", utils.CheckToken)
-	e.GET("/blog", blog.Post)
+
+	e.GET("/posts", posts.AllGetBlogPost)
+	e.GET("/posts/:userId", posts.GetBlogPostById)
+	e.POST("/posts", posts.PostBlogPost)
+
+	e.GET("/profile/:userId", profile.GetProfileById)
+
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})

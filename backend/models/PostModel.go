@@ -13,4 +13,5 @@ type PostStruct struct {
 	UserId      string             `bson:"userId,omitempty"`
 	CreatedDate time.Time          `bson:"createdDate,omitempty"`
 	Image       string             `bson:"image,omitempty"`
+	UserName    string             `bson:"userName,omitempty"`
 }

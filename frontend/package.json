@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.3.0",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -24,10 +25,9 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "build:css": "postcss src/assets/css/tailwind.css -o src/assets/css/index.css",
-    "start": "react-scripts start",
-    "build": "yarn build:css && react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,8 +49,8 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^10.3.3",
-    "postcss": "^8.3.6",
-    "tailwindcss": "^2.2.9"
+    "autoprefixer": "^9",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

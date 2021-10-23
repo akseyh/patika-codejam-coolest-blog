@@ -5,6 +5,7 @@ export interface UserType {
 }
 
 export interface PostType {
+    _id: number,
     title: string,
     author: string,
     text: string

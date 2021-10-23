@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { Home, Profile, AddArticle } from '../pages'
+import { Home, Profile, AddArticle, Post, Login } from '../pages'
 
 const AppRouter: React.FC = () => {
   return (
@@ -8,6 +8,12 @@ const AppRouter: React.FC = () => {
       <Switch>
         <Route path="/" exact>
           <Home />
+        </Route>
+        <Route path='/login'>
+          <Login />
+        </Route>
+        <Route path='/posts/:id'>
+          <Post />
         </Route>
         <Route path="/profile">
           <Profile />

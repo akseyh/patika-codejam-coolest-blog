@@ -18,7 +18,7 @@ func main() {
 		C2: client.Database("coolest-blog").Collection("token"),
 	}
 	blog := handlers.Collection{
-		C1: client.Database("coolest-blog").Collection("post"),
+		C1: client.Database("coolest-blog").Collection("blog"),
 	}
 	e.POST("/login", login.Login)
 	e.POST("/checkToken", utils.CheckToken)

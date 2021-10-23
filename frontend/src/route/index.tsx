@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import {Home, Profile, AddArticle} from '../pages'
+import { Home, Profile, AddArticle } from '../pages'
 
 const AppRouter: React.FC = () => {
   return (

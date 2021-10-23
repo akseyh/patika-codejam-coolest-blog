@@ -6,7 +6,7 @@ const AppRouter: React.FC = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/">
+        <Route path="/" exact>
           <Home />
         </Route>
         {/* <Route path="/about">

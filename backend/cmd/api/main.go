@@ -17,9 +17,12 @@ func main() {
 		C1: client.Database("coolest-blog").Collection("user"),
 		C2: client.Database("coolest-blog").Collection("token"),
 	}
-
+	blog := handlers.Collection{
+		C1: client.Database("coolest-blog").Collection("post"),
+	}
 	e.POST("/login", login.Login)
 	e.POST("/checkToken", utils.CheckToken)
+	e.GET("/blog", blog.Post)
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})

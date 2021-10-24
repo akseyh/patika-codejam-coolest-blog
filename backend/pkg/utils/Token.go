@@ -65,9 +65,14 @@ func CheckTokenDB(user models.UserStruct, coll *mongo.Collection) bson.M {
 	coll.FindOne(context.TODO(), bson.M{
 		"username": claims["username"],
 	}).Decode(data)
-	fmt.Println(data)
+
+	fmt.Println("data1", data)
+	if data["token"] == nil || data["username"] == nil {
+		return bson.M{"error": "token error"}
+	}
 	user2.Token = data["token"].(string)
 	user2.Username = claims["username"].(string)
+
 	if err := CheckToken(user2); err != nil {
 		return bson.M{"error": err.Error()}
 	}

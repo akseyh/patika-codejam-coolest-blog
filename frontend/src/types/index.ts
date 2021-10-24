@@ -1,5 +1,5 @@
 export interface UserType {
-    _id: number,
+    _id: string,
     username: string,
     jobTitle: string,
     profilePhotoUrl: string,
@@ -11,6 +11,6 @@ export interface UserType {
 export interface PostType {
     _id: number,
     title: string,
-    author: string,
+    userName: string,
     text: string
 }

@@ -1,3 +1,5 @@
 export {default as Home} from './home'
 export {default as Profile} from './profle/profile'
 export {default as AddArticle} from './addArticle'
+export {default as Post} from './post'
+export {default as Login} from './login'

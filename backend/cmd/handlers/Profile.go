@@ -25,5 +25,7 @@ func (coll *Collection) GetProfileById(c echo.Context) error {
 		"github":   resultDoc.Github,
 		"bio":      resultDoc.Bio,
 		"userId":   resultDoc.UserId,
+		"username": resultDoc.UserName,
+		"image":    resultDoc.Image,
 	})
 }

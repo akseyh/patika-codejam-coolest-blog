@@ -29,6 +29,7 @@ func (coll *Collection) GetBlogPostById(c echo.Context) error {
 }
 func (coll *Collection) PostBlogPost(c echo.Context) error {
 	resultDoc := &models.PostStruct{}
+
 	if err := c.Bind(resultDoc); err != nil {
 		return c.JSON(http.StatusNoContent, err.Error())
 	}

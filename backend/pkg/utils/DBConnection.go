@@ -4,7 +4,6 @@ import (
 	"context"
 	"os"
 
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -23,10 +22,10 @@ func Close(client *mongo.Client) {
 
 func Connect() *mongo.Client {
 	// mongo.Connect return mongo.Client method
-	err := godotenv.Load()
+	/*err := godotenv.Load()
 	if err != nil {
 		panic(err)
-	}
+	}*/
 	client, err := mongo.Connect(
 		context.TODO(),
 		options.Client().ApplyURI("mongodb+srv://"+os.Getenv("DBUSERNAME")+":"+os.Getenv("DBPASSWORD")+"@cluster0.4lioy.mongodb.net/coolest-blog?retryWrites=true&w=majority"),

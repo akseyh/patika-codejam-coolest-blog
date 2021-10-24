@@ -2,43 +2,34 @@ import { useEffect, useState } from "react";
 import { BlogList, Layout } from "../../components";
 import ProfileHeader from "./components/header";
 
-import { UserType } from '../../types'
+import { PostType, UserType } from '../../types'
 import axios from "axios";
 
 import { useParams } from 'react-router-dom'
 
 const Profile: React.FC = () => {
-  const [user, setUser] = useState<UserType>({_id: '0', username: '', jobTitle: '', profilePhotoUrl: '', bio: '', cvUrl: '', githubLink: ''})
+  const [user, setUser] = useState<UserType>({userId: '0', username: '', jobTitle: '', image: '', bio: '', cvUrl: '', github: ''})
+  const [posts, setPosts] = useState<PostType[]>([])
 
   const { id } = useParams()
 
   useEffect(() => {
-    const payload = {
-      _id: '0',
-      username: 'Berat Bozkurt',
-      jobTitle: 'Sr. Master Slide Rider',
-      profilePhotoUrl: 'https://pbs.twimg.com/profile_images/1427998418304180227/fRwxt56__400x400.jpg',
-      cvUrl: 'https://berat.github.io/cv',
-      bio: '',
-      githubLink: ''
-    }
-
-    axios.get<UserType>('https://coolest-blog-api.herokuapp.com/profile', {
-      params: {
-        userId: id
-      }
-    })
+    axios.get<UserType>(`https://coolest-blog-api.herokuapp.com/profile/${id}`)
       .then(res => {
-        console.log(res)
+        setUser(res.data)
       })
 
-    setUser(payload)
+    axios.get<PostType[]>(`https://coolest-blog-api.herokuapp.com/posts/${id}`)
+      .then(res => {
+        setPosts(res.data)
+      })
+
   }, [id])
 
   return (
     <Layout>
       <ProfileHeader user={user} />
-      <BlogList />
+      <BlogList posts={posts} />
     </Layout>
   );
 };

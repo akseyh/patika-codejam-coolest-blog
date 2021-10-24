@@ -1,15 +1,24 @@
 import { BlogItem } from "..";
-import useBlogList from "./hooks/useBlogList";
+import { PostType } from "../../types";
 
-const BlogList: React.FC = (): any => {
-  const { data } = useBlogList();
+interface IBlogListProps {
+  posts: PostType[]
+}
+
+const BlogList: React.FC<IBlogListProps> = (props): any => {
+  const { posts } = props
 
   return (
-    <section className="flex flex-row gap-6 flex-wrap">
-      {data.map((item, index) => (
-        <BlogItem {...item} />
-      ))}{" "}
-    </section>
+    <div className='flex flex-col gap-y-4 mt-16'>
+      <span className='text-3xl font-semibold'>Son Yazılar</span>
+      <section className="flex flex-row gap-6 flex-wrap mb-32">
+        {
+          posts.map((post, index) => (
+            <BlogItem key={post._id} post={post}/>
+          ))
+        }{" "}
+      </section>
+    </div>
   );
 };
 

@@ -5,7 +5,7 @@ import { PostType } from "../types"
 import { useParams } from 'react-router-dom'
 
 const Post: React.FC = (props) => {
-    const [post, setPost] = useState<PostType>({_id: 0, userName: '', text: '', title: ''})
+    const [post, setPost] = useState<PostType>({_id: '', userName: '', text: '', title: '', userId: '', createdDate: new Date()})
 
     const { id } = useParams()
 
@@ -14,10 +14,12 @@ const Post: React.FC = (props) => {
             .then(res => {
                 const payload = res.data.find(el => el._id === id)
                 const _post = {
-                    _id: payload?._id || 0,
+                    _id: payload?._id || '',
                     userName: payload?.userName || '',
                     text: payload?.text || '',
-                    title: payload?.title || ''
+                    title: payload?.title || '',
+                    createdDate: payload?.createdDate || new Date(),
+                    userId: payload?.userId || ''
                 }
                 setPost(_post)
             })

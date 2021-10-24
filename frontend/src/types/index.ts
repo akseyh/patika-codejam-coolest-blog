@@ -1,16 +1,18 @@
 export interface UserType {
-    _id: string,
-    username: string,
-    jobTitle: string,
-    profilePhotoUrl: string,
-    cvUrl: string,
     bio: string,
-    githubLink: string
+    cvUrl: string,
+    github: string
+    image: string,
+    jobTitle: string,
+    userId: string,
+    username: string,
 }
 
 export interface PostType {
-    _id: number,
+    _id: string,
     title: string,
+    userId: string
     userName: string,
-    text: string
+    text: string,
+    createdDate: Date,
 }

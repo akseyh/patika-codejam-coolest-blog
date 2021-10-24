@@ -16,8 +16,12 @@ const ProfileHeader: React.FC<IProfileHeaderProps> = (props) => {
       <p className="text-gray-600">{user.bio}</p>
       <div>
         <ul className="flex flex-col gap-2">
-          <li className="text-blue-400">{user.cvUrl}</li>
-          <li className="text-blue-400">{user.github}</li>
+          <li className="text-blue-400">
+            <a href={user.cvUrl} target='_blank' rel='noreferrer'>{user.cvUrl}</a>
+          </li>
+          <li className="text-blue-400">
+            <a href={user.github} target='_blank' rel='noreferrer'>{user.github}</a>
+          </li>
         </ul>
       </div>
     </div>

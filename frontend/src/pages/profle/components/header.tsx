@@ -8,7 +8,7 @@ interface IProfileHeaderProps {
 const ProfileHeader: React.FC<IProfileHeaderProps> = (props) => {
   const {user} = props
 
-  return <header className="my-12 flex flex-row gap-6">
+  return <header className="my-12 flex flex-row gap-6 flex-wrap">
     <ProfileAvatar url={user.image} title="t" />
     <div className="flex flex-col justify-center gap-2">
       <h1>{user.username}</h1>

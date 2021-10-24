@@ -13,24 +13,40 @@ const Home: React.FC = () => {
     setTimeout(() => {
       const userPayload = [
         {
-          fullName: 'Adem Şahin',
+          _id: 0,
+          username: 'Adem Şahin',
           jobTitle: 'Go Developer',
-          profilePhotoUrl: 'https://i.ibb.co/GvXGkfR/adem.png'
+          profilePhotoUrl: 'https://i.ibb.co/GvXGkfR/adem.png',
+          cvUrl: '',
+          bio: '',
+          githubLink: ''
         },
         {
-          fullName: 'Berat Bozkurt',
+          _id: 1,
+          username: 'Berat Bozkurt',
           jobTitle: 'Front End Developer',
-          profilePhotoUrl: 'https://i.ibb.co/njdq3Kf/berat.png'
+          profilePhotoUrl: 'https://i.ibb.co/njdq3Kf/berat.png',
+          cvUrl: '',
+          bio: '',
+          githubLink: ''
         },
         {
-          fullName: 'Kadir Zabun',
+          _id: 2,
+          username: 'Kadir Zabun',
           jobTitle: 'Back End Developer',
-          profilePhotoUrl: 'https://i.ibb.co/G3ZQLnF/kadir.png'
+          profilePhotoUrl: 'https://i.ibb.co/G3ZQLnF/kadir.png',
+          cvUrl: '',
+          bio: '',
+          githubLink: ''
         },
         {
-          fullName: 'Şems Yılmaz',
+          _id: 3,
+          username: 'Şems Yılmaz',
           jobTitle: 'Front End Developer',
-          profilePhotoUrl: 'https://i.ibb.co/9rrX0Lk/sems.png'
+          profilePhotoUrl: 'https://i.ibb.co/9rrX0Lk/sems.png',
+          cvUrl: '',
+          bio: '',
+          githubLink: ''
         }
       ]
 
@@ -73,7 +89,7 @@ const Home: React.FC = () => {
           <div className='w-11/12 flex justify-center gap-x-10 mt-8'>
             {
               users.map(user => (
-                <UserCard key={user.fullName} user={user}/>
+                <UserCard key={user.username} user={user}/>
               ))
             }
           </div>

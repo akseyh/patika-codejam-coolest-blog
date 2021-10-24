@@ -1,7 +1,11 @@
 export interface UserType {
-    fullName: string,
+    _id: number,
+    username: string,
     jobTitle: string,
-    profilePhotoUrl: string
+    profilePhotoUrl: string,
+    cvUrl: string,
+    bio: string,
+    githubLink: string
 }
 
 export interface PostType {

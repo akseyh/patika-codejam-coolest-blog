@@ -1,5 +1,5 @@
 export interface UserType {
-    _id: number,
+    _id: string,
     username: string,
     jobTitle: string,
     profilePhotoUrl: string,

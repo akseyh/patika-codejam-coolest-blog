@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"net/http"
 
 	"github.com/akseyh/patika-codejam-coolest-blog/backend/models"
@@ -13,26 +13,42 @@ import (
 
 func (coll *Collection) Login(c echo.Context) error {
 	resultDoc := &models.UserStruct{}
+
 	if err := c.Bind(resultDoc); err != nil {
-		fmt.Println("bind err", err)
 		return c.JSON(http.StatusNoContent, err.Error())
 	}
-
-	filterDoc := models.UserStruct{
-		Username: resultDoc.Username,
-		Password: resultDoc.Password,
+	if resultDoc.Token != "" {
+		if err := utils.CheckToken(*resultDoc); err != nil {
+			return c.JSON(http.StatusBadRequest, err.Error())
+		}
+		data := utils.CheckTokenDB(*resultDoc, coll.C1)
+		if data["error"] != nil {
+			return c.JSON(http.StatusBadRequest, data["error"])
+		}
+		return c.JSON(http.StatusOK, data)
 	}
 
-	coll.C1.FindOne(context.TODO(), filterDoc).Decode(resultDoc)
+	if resultDoc.Username == "" || resultDoc.Password == "" {
+		return c.JSON(http.StatusBadRequest, errors.New("username and password must be"))
+	}
+
+	coll.C1.FindOne(context.TODO(), bson.M{
+		"username": resultDoc.Username,
+		"password": resultDoc.Password,
+	}).Decode(resultDoc)
 
 	if resultDoc.Id.Hex() == "000000000000000000000000" {
 		return c.JSON(http.StatusBadRequest, "uza birader 4 kişilik içerisi")
 	}
 
-	token := utils.CreateToken(*resultDoc)
+	resultDoc.Token = utils.CreateToken(*resultDoc)
+	if err := utils.WriteTokenDB(*resultDoc, coll.C1); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
 	return c.JSON(http.StatusOK, bson.M{
 		"userId":   resultDoc.Id,
-		"token":    token,
+		"token":    resultDoc.Token,
 		"username": resultDoc.Username,
 	})
 }

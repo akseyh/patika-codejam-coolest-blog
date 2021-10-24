@@ -15,7 +15,6 @@ func main() {
 	defer utils.Close(client)
 	login := handlers.Collection{
 		C1: client.Database("coolest-blog").Collection("user"),
-		C2: client.Database("coolest-blog").Collection("token"),
 	}
 	posts := handlers.Collection{
 		C1: client.Database("coolest-blog").Collection("blog"),
@@ -24,7 +23,8 @@ func main() {
 		C1: client.Database("coolest-blog").Collection("profile"),
 	}
 	e.POST("/login", login.Login)
-	e.POST("/checkToken", utils.CheckToken)
+	e.POST("/checkToken", login.Login)
+	//e.POST("/checkToken", login.CheckToken)
 
 	e.GET("/posts", posts.AllGetBlogPost)
 	e.GET("/posts/:userId", posts.GetBlogPostById)

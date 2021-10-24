@@ -16,12 +16,12 @@ const BlogItem: React.FC<BIProps> = (props) => {
   }
 
   return (
-    <article className="flex flex-col w-4/12 gap-2 cursor-pointer" onClick={handleClick}>
-      <span className="text-gray-600">
+    <article className="flex flex-col w-full gap-2 cursor-pointer" onClick={handleClick}>
+      <span className="text-gray-600 text-xs">
         {moment(post.createdDate).format("DD MMMM YYYY")}
       </span>
       <h3 className="text-xl text-gray-800">{post.title}</h3>
-      <p className="text-gray-600">{post.text.slice(0, 150)}</p>
+      <p className="text-gray-600 text-sm">{post.text.slice(0, 150)}</p>
     </article>
   );
 };

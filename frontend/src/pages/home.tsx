@@ -64,8 +64,8 @@ const Home: React.FC = () => {
 
   return (
     <Layout>
-        <div className='w-full flex flex-col items-center mt-36'>
-          <div className='w-11/12 flex flex-wrap justify-center gap-x-10 mt-8'>
+        <div className='w-full flex flex-col items-center mt-12'>
+          <div className='w-11/12 flex flex-wrap justify-center gap-x-10'>
             {
               users.map(user => (
                 <UserCard key={user.username} user={user}/>

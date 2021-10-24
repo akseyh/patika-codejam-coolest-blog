@@ -22,7 +22,7 @@ const Post: React.FC = (props) => {
                 setPost(_post)
             })
 
-    }, [])
+    }, [id])
 
     return (
     <Layout>

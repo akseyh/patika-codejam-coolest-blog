@@ -33,7 +33,7 @@ const Profile: React.FC = () => {
       })
 
     setUser(payload)
-  }, [])
+  }, [id])
 
   return (
     <Layout>

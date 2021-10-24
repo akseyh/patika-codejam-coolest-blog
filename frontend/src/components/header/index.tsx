@@ -15,7 +15,7 @@ const Header: React.FC = () => {
           <Link to='/'>
             <li className={`${pathname === '/' ? selectedClasses : classes}`}>Home</li>
           </Link>
-          <li className="text-lg list-none flex items-center select-none cursor-pointer hover:text-black">Logout</li>
+          {/* <li className="text-lg list-none flex items-center select-none cursor-pointer hover:text-black">Logout</li> */}
       </nav>
     </header>
   );

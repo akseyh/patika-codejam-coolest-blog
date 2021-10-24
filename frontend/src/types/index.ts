@@ -11,6 +11,6 @@ export interface UserType {
 export interface PostType {
     _id: number,
     title: string,
-    author: string,
+    userName: string,
     text: string
 }

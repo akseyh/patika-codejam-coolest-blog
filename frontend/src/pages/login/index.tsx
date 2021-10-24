@@ -1,13 +1,16 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { Layout } from "../../components"
 import { login } from "../../store/auth"
 
 const Login: React.FC = () => {
+    const dispatch = useDispatch()
+
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
     function handleLogin() {
-        login({username, password})
+        dispatch(login({username, password}))
     }
 
     return (

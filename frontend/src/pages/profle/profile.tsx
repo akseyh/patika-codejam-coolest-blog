@@ -3,9 +3,14 @@ import { BlogList, Layout } from "../../components";
 import ProfileHeader from "./components/header";
 
 import { UserType } from '../../types'
+import axios from "axios";
+
+import { useParams } from 'react-router-dom'
 
 const Profile: React.FC = () => {
   const [user, setUser] = useState<UserType>({_id: 0, username: '', jobTitle: '', profilePhotoUrl: '', bio: '', cvUrl: '', githubLink: ''})
+
+  const { id } = useParams()
 
   useEffect(() => {
     const payload = {
@@ -17,6 +22,15 @@ const Profile: React.FC = () => {
       bio: '',
       githubLink: ''
     }
+
+    axios.get<UserType>('https://coolest-blog-api.herokuapp.com/profile', {
+      params: {
+        userId: id
+      }
+    })
+      .then(res => {
+        console.log(res)
+      })
 
     setUser(payload)
   }, [])

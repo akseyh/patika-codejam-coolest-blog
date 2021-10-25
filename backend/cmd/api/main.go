@@ -10,10 +10,18 @@ import (
 )
 
 func main() {
+	//delete when deploy
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	panic(err)
+	// }
+
 	e := echo.New()
 	e.Use(utils.CORSConfig(), utils.Logger())
+
 	client := utils.Connect()
 	defer utils.Close(client)
+
 	login := handlers.Collection{
 		C1: client.Database("coolest-blog").Collection("user"),
 	}
@@ -24,9 +32,9 @@ func main() {
 	profile := handlers.Collection{
 		C1: client.Database("coolest-blog").Collection("profile"),
 	}
+
 	e.POST("/login", login.Login)
-	e.POST("/checkToken", login.Login)
-	//e.POST("/checkToken", login.CheckToken)
+	e.POST("/checkToken", login.CheckToken)
 
 	e.GET("/posts", posts.AllGetBlogPost)
 	e.GET("/posts/:userId", posts.GetBlogPostById)
@@ -38,6 +46,8 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
+
+	//change when deploy
 	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 	// e.Logger.Fatal(e.Start(":8080"))
 }

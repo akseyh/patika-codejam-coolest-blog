@@ -3,7 +3,6 @@ package utils
 import (
 	"context"
 	"errors"
-	"fmt"
 	"os"
 	"time"
 
@@ -32,54 +31,52 @@ func CreateToken(user models.UserStruct) string {
 	return t
 }
 
-func CheckToken(user models.UserStruct) error {
-	token, _ := jwt.Parse(user.Token, nil)
+func CheckTokenValidity(tokenCame string) bson.M {
+	token, _ := jwt.Parse(tokenCame, nil)
 	if _, ok := token.Claims.(jwt.Claims); !ok && !token.Valid {
-		return errors.New("invalid token")
+		return bson.M{"error": "invalid token"}
 	}
+
 	claims := token.Claims.(jwt.MapClaims)
+	if claims["exp"] == nil {
+		return bson.M{"error": "invalid token"}
+	}
+
 	if float64(time.Now().Unix()) >= claims["exp"].(float64) {
-		return errors.New("expired Token")
+		return bson.M{"error": "expired Token"}
 	}
-	if user.Username != "" {
-		if claims["username"] != user.Username {
-			return errors.New("wrong Token with username")
-		}
-	} else {
-		fmt.Println(claims["_id"], user.Id.Hex())
-		if claims["_id"] != user.Id.Hex() {
-			return errors.New("wrong Token with id")
-		}
-	}
+
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-		return errors.New("unexpected signing method")
+		return bson.M{"error": "unexpected signing method"}
 	}
+
+	if claims["username"] != nil {
+		return bson.M{"username": claims["username"].(string)}
+	}
+
 	return nil
 }
 
-func CheckTokenDB(user models.UserStruct, coll *mongo.Collection) bson.M {
-	token, _ := jwt.Parse(user.Token, nil)
-	claims := token.Claims.(jwt.MapClaims)
-	data := bson.M{}
-	user2 := models.UserStruct{}
+func CheckTokenDB(user *models.UserStruct, coll *mongo.Collection) bson.M {
+	userDB := bson.M{}
+
 	coll.FindOne(context.TODO(), bson.M{
-		"username": claims["username"],
-	}).Decode(data)
+		"username": user.Username,
+	}).Decode(userDB)
 
-	fmt.Println("data1", data)
-	if data["token"] == nil || data["username"] == nil {
-		return bson.M{"error": "token error"}
+	if userDB["token"] == "" {
+		return bson.M{"error": "username don't have token"}
 	}
-	user2.Token = data["token"].(string)
-	user2.Username = claims["username"].(string)
 
-	if err := CheckToken(user2); err != nil {
-		return bson.M{"error": err.Error()}
+	if err := CheckTokenValidity(userDB["token"].(string)); err["error"] != nil {
+		return bson.M{"error": err["error"]}
 	}
-	if user.Token != user2.Token {
+
+	if user.Token != userDB["token"].(string) {
 		return bson.M{"error": errors.New("tokens must be same")}
 	}
-	return bson.M{"_id": claims["_id"], "username": user2.Username}
+
+	return bson.M{"_id": userDB["_id"], "username": userDB["username"].(string)}
 }
 
 func WriteTokenDB(user models.UserStruct, coll *mongo.Collection) error {

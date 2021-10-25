@@ -17,16 +17,6 @@ func (coll *Collection) Login(c echo.Context) error {
 	if err := c.Bind(resultDoc); err != nil {
 		return c.JSON(http.StatusNoContent, err.Error())
 	}
-	if resultDoc.Token != "" {
-		if err := utils.CheckToken(*resultDoc); err != nil {
-			return c.JSON(http.StatusBadRequest, err.Error())
-		}
-		data := utils.CheckTokenDB(*resultDoc, coll.C1)
-		if data["error"] != nil {
-			return c.JSON(http.StatusBadRequest, data["error"])
-		}
-		return c.JSON(http.StatusOK, data)
-	}
 
 	if resultDoc.Username == "" || resultDoc.Password == "" {
 		return c.JSON(http.StatusBadRequest, errors.New("username and password must be"))

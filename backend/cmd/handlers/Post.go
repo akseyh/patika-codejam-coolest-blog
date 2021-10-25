@@ -43,14 +43,14 @@ func (coll *Collection) PostBlogPost(c echo.Context) error {
 	user.Token = head["Token"][0]
 	fmt.Println("user token", user.Token)
 
-	data := utils.CheckTokenDB(user, coll.C2)
+	data := utils.CheckTokenDB(&user, coll.C2)
 	if data["error"] != nil {
 		return c.JSON(http.StatusBadRequest, data["error"])
 	}
 
 	user.Username = data["username"].(string)
-	if err := utils.CheckToken(user); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+	if err := utils.CheckTokenValidity(user.Token); err["error"] != nil {
+		return c.JSON(http.StatusBadRequest, err["error"])
 	}
 
 	if err := c.Bind(resultDoc); err != nil {
